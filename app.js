@@ -3,6 +3,30 @@
    (very advanced technology)
    ============================================ */
 
+/* ============================================
+   🚀 LAUNCH CONFIG — update these when live!!
+   ============================================ */
+const CONFIG = {
+  CA:       '2PQiYiFgUKdav7Xv88XagaWk1wczamnPispAaPAqpump',
+  PUMPFUN:  'https://pump.fun/coin/2PQiYiFgUKdav7Xv88XagaWk1wczamnPispAaPAqpump',
+};
+/* ========================================= */
+
+// ── APPLY CONFIG TO PAGE ──
+// (script is at bottom of body so DOM is already ready — no DOMContentLoaded needed)
+const isLive = CONFIG.CA !== 'coming soon!!' && CONFIG.CA !== '';
+
+const caTextEl = document.getElementById('ca-text');
+if (caTextEl) caTextEl.textContent = CONFIG.CA;
+
+if (isLive) {
+  document.querySelectorAll('#btn-buy-hero, #footer-pumpfun').forEach(el => {
+    el.href = CONFIG.PUMPFUN;
+    el.target = '_blank';
+    el.rel = 'noopener noreferrer';
+  });
+}
+
 // ── CURSOR COIN ──
 const cursorCoin = document.getElementById('cursor-coin');
 if (cursorCoin) {
@@ -14,15 +38,15 @@ if (cursorCoin) {
 
 // ── COPY CA ──
 function copyCa() {
-  const caText = document.getElementById('ca-text').textContent.trim();
-  if (caText === 'coming soon!!') {
+  const isLive = CONFIG.CA !== 'coming soon!!' && CONFIG.CA !== '';
+  if (!isLive) {
     const btn = document.getElementById('copy-ca-btn');
     const orig = btn.textContent;
     btn.textContent = '🚫 not yet!!';
     setTimeout(() => { btn.textContent = orig; }, 1500);
     return;
   }
-  navigator.clipboard.writeText(caText).then(() => {
+  navigator.clipboard.writeText(CONFIG.CA).then(() => {
     const btn = document.getElementById('copy-ca-btn');
     const orig = btn.textContent;
     btn.textContent = '✅ copied!!';
